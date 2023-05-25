@@ -10,7 +10,7 @@ class PaymentDtoMapper: Mapper<Payment, PaymentDto> {
     override fun map(type: Payment): PaymentDto {
         return PaymentDto(
             id = type.id,
-            value = type.value,
+            value = type.paymentValue,
             name = type.name,
             number = type.number,
             expirationAt = type.expirationAt,

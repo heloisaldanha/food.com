@@ -39,13 +39,13 @@ class PaymentController(
                uriBuilder: UriComponentsBuilder
     ): ResponseEntity<PaymentDto> {
         val payment = service.create(paymentDto)
-        val uri = uriBuilder.path("/pagamentos/{id}").buildAndExpand(payment.id).toUri()
+        val uri = uriBuilder.path("/pagamentos/{id}").build().toUri()
         
         return ResponseEntity.created(uri).body(payment)
     }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable @RequestBody @Valid id: Long, paymentDto: PaymentDto): ResponseEntity<PaymentDto> {
+    fun update(@PathVariable id: Long, @RequestBody @Valid paymentDto: PaymentDto): ResponseEntity<PaymentDto> {
         val newPaymentDto = service.update(id, paymentDto)
 
         return  ResponseEntity.ok(newPaymentDto)

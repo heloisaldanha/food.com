@@ -30,21 +30,31 @@ class PaymentService(
     }
 
     fun create(paymentDto: PaymentDto): PaymentDto {
+        paymentDto.status = Status.CREATED
         val payment = paymentMapper.map(paymentDto)
-        Status.CREATED
+
         repository.save(payment)
 
         return paymentDtoMapper.map(payment)
     }
 
     fun update(id: Long, paymentDto: PaymentDto): PaymentDto {
-        val payment = paymentMapper.map(paymentDto)
-        payment.id
-        repository.save(payment)
-        return paymentDtoMapper.map(payment)
+        var paymentById = repository.findById(id).orElseThrow { Exception("Pagamento não encontrado.") }
+        paymentById.paymentValue = paymentDto.value
+        paymentById.name = paymentDto.name
+        paymentById.number = paymentDto.number
+        paymentById.expirationAt = paymentDto.expirationAt
+        paymentById.securityCode = paymentDto.securityCode
+        paymentById.idOrder = paymentDto.idOrder
+        paymentById.paymentType = paymentDto.paymentType
+
+        repository.save(paymentById)
+
+        return paymentDtoMapper.map(paymentById)
     }
 
     fun delete(id: Long) {
+        repository.findById(id).orElseThrow { Exception("Pagamento não encontrado.") }
         repository.deleteById(id)
     }
 }

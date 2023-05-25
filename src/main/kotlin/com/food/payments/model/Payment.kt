@@ -16,31 +16,31 @@ data class Payment(
 
     @NotNull
     @Positive
-    val value: Int,
+    var paymentValue: Double,
 
     @NotBlank
     @Size(max = 100)
-    val name: String,
+    var name: String,
 
     @NotBlank
     @Size(max = 19)
-    val number: String,
+    var number: String,
 
     @NotBlank
     @Size(max = 7)
-    val expirationAt: String,
+    var expirationAt: String,
 
     @NotBlank
     @Size(min = 3, max = 3)
-    val securityCode: String,
+    var securityCode: String,
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    val status: Status,
+    var status: Status,
 
     @NotNull
-    val idOrder: Long,
+    var idOrder: Long,
 
     @NotNull
-    val paymentType: Long
+    var paymentType: Long
 )
