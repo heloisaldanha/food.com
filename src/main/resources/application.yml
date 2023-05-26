@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: payments-ms
   datasource:
     url: jdbc:postgresql://localhost:5432/food
     username: postgres
@@ -9,3 +11,11 @@ spring:
       ddl-auto: update
   flyway:
     baselineOnMigrate: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka
+
+server:
+  port: 0
