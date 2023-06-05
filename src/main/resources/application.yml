@@ -19,3 +19,11 @@ eureka:
 
 server:
   port: 0
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      atualizaPedido:
+        slidingWindowSize: 3  // quantas requisições eu vou considerar
+        minimunNumberOfCalls: 2  // o mínimo de chamadas que tenho que fazer até o circuit breaker não fazer mais requisição
+        waitDurationInOpenState: 50s  // quanto tempo vai manter o estado aberto

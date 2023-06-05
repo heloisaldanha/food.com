@@ -75,4 +75,14 @@ class PaymentService(
 
     }
 
+    fun updateStatus(id: Long) {
+        val payment: Optional<Payment> = repository.findById(id)
+        if (!payment.isPresent) {
+            throw EntityNotFoundException()
+        }
+
+        payment.get().status = Status.CONFIRMED_WITHOUT_INTEGRATION
+        repository.save(payment.get())
+    }
+
 }

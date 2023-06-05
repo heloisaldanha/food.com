@@ -2,6 +2,7 @@ package com.food.payments.controller
 
 import com.food.payments.dto.PaymentDto
 import com.food.payments.service.PaymentService
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotNull
 import org.springframework.data.domain.Page
@@ -61,8 +62,13 @@ class PaymentController(
     }
 
     @PatchMapping("/{id}/confirmar")
+    @CircuitBreaker(name = "atualizaPedido", fallbackMethod = "pagamentoAutorizadoComIntegracaoPendente")
     fun paymentConfirmed(@PathVariable @NotNull id: Long) {
         service.paymentConfirmed(id)
+    }
+
+    fun paymentAuthorizedPendingIntegration(id: Long, exception: Exception) {
+        service.updateStatus(id)
     }
 
 }
